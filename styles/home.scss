@@ -41,14 +41,14 @@ body {
       margin: 5px;
       padding: 0 10px;
     }
-    .system {
-      font-style: italic;
-      padding: 5px 20px;
-    }
     .message-username {
       flex: 2;
       font-weight: 700;
     }
+  }
+  .system {
+    font-style: italic;
+    padding: 5px 20px;
   }
   .chatbar {
     background: tomato;
