@@ -1,5 +1,7 @@
 # ChattyApp
 
+[image]("https://i.imgur.com/YC7Ic8G.png")
+
 A minimal and light chatting application built to practice ReactJS.
 
 Stack:
