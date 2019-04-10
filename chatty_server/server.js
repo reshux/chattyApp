@@ -18,17 +18,24 @@ const server = express()
 // Create the WebSockets server
 const wss = new SocketServer({ server });
 
+// Count how many users are online
+const onlineCounter = nbClients => {
+  const infoMsg = { number: nbClients, type: 'onlineCounter' };
+  wss.broadcast(JSON.stringify(infoMsg));
+};
+
 wss.on('connection', ws => {
   console.log('Client connected');
-
+  // Call counter everytime a new client connects
+  onlineCounter(wss.clients.size);
   ws.on('message', msg => {
     const incoming = JSON.parse(msg);
-    console.log(incoming);
     const builder = {
       id: uuid(),
       username: incoming.username,
       content: incoming.content,
-      type: ''
+      type: '',
+      counter: wss.clients.size
     };
     switch (incoming.type) {
       case 'postMessage':
@@ -40,15 +47,15 @@ wss.on('connection', ws => {
         wss.broadcast(JSON.stringify(builder));
         break;
       default:
-        console.log('Hey');
+        console.log('Error!');
     }
-
-    // console.log(finalForm);
-    // wss.broadcast(finalForm);
   });
 
   // Set up a callback for when a client closes the socket. This usually means they closed their browser.
-  ws.on('close', () => console.log('Client disconnected'));
+  ws.on('close', () => {
+    console.log('Client disconnected');
+    onlineCounter(wss.clients.size);
+  });
 });
 
 wss.broadcast = function(data) {

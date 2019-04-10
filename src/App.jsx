@@ -13,6 +13,7 @@ class App extends Component {
   constructor(props) {
     super();
     this.state = {
+      onlineCounter: 1,
       currentUser: '',
       messages: []
     };
@@ -28,9 +29,10 @@ class App extends Component {
 
   handleOnMessage = event => {
     const received = JSON.parse(event.data);
-    const oldMessages = this.state.messages;
     console.log(received);
+    const oldMessages = this.state.messages;
     this.setState({ currentUser: received.username });
+    this.setState({ onlineCounter: received.counter });
     switch (received.type) {
       case 'incomingMessage':
         this.setState({ messages: [...oldMessages, received] });
@@ -38,8 +40,8 @@ class App extends Component {
       case 'incomingNotification':
         this.setState({ messages: [...oldMessages, received] });
         break;
-      default:
-        throw new Error('Unknown event type ' + received.type);
+      case 'onlineCounter':
+        this.setState({ onlineCounter: received.number });
     }
   };
 
@@ -63,7 +65,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <NavBar />
+        <NavBar onlineCounter={this.state.onlineCounter} />
         <MessageList messages={this.state.messages} />
         <ChatBar
           currentUser={this.state.currentUser}

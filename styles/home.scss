@@ -28,6 +28,12 @@ body {
       padding: 0 10px;
       text-decoration: none;
     }
+    .navbar-counter {
+      height: 60px;
+      float: right;
+      line-height: 60px;
+      padding-right: 10px;
+    }
   }
   .message {
     display: flex;
