@@ -10,7 +10,12 @@ class MessageList extends Component {
     const received = this.props.messages.map(msg => {
       if (msg.type === 'incomingMessage') {
         return (
-          <Message content={msg.content} username={msg.username} key={msg.id} />
+          <Message
+            content={msg.content}
+            color={msg.color}
+            username={msg.username}
+            key={msg.id}
+          />
         );
       } else if (msg.type === 'incomingNotification') {
         return (

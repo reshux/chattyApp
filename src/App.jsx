@@ -8,7 +8,7 @@ class App extends Component {
     super();
     this.state = {
       onlineCounter: 1,
-      currentUser: '',
+      currentUser: { name: '', color: '' },
       messages: []
     };
   }
@@ -25,9 +25,6 @@ class App extends Component {
     const received = JSON.parse(event.data);
     // Get the already existing messages from state
     const oldMessages = this.state.messages;
-    this.setState({
-      currentUser: received.username
-    });
     // switch to manipulate messages according to their types
     switch (received.type) {
       case 'incomingMessage':
@@ -38,6 +35,12 @@ class App extends Component {
       case 'onlineCounter':
         // updates user counter
         this.setState({ onlineCounter: received.number });
+        break;
+      case 'userColor':
+        this.setState({
+          currentUser: { ...this.state.currentUser, color: received.color }
+        });
+        break;
     }
   };
 
@@ -53,10 +56,12 @@ class App extends Component {
   // a generic function to send data to WebSocket server
   // this function is sent to child component chatBar as a prop
   serverSend = (content, user, type) => {
+    console.log(this.state.currentUser.color);
     const operator = {
       content,
       username: user,
-      type
+      type,
+      color: this.state.currentUser.color
     };
     this.socket.send(JSON.stringify(operator));
   };

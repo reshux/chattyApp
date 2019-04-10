@@ -5,15 +5,14 @@ class ChatBar extends Component {
     super(props);
     this.state = {
       inputChecker: '',
-      userChecker: 'Anonymous',
-      typeChecker: ''
+      userChecker: 'Anonymous'
     };
   }
 
   //// Handler and helper function for a username change
 
-  handleChangeUser = event => {
-    this.setState({ typeChecker: 'postNotification' });
+  handleChange = event => {
+    this.setState({ userChecker: event.target.value });
   };
 
   onPressEnterUser = event => {
@@ -25,7 +24,7 @@ class ChatBar extends Component {
       this.props.serverSend(
         `${oldName} has changed their username to ${event.target.value}.`,
         this.state.userChecker,
-        this.state.typeChecker
+        'postNotification'
       );
     }
   };
@@ -33,7 +32,6 @@ class ChatBar extends Component {
   //// Handler and helper function for a new message
 
   handleChangeMessage = event => {
-    this.setState({ typeChecker: 'postMessage' });
     this.setState({ inputChecker: event.target.value });
   };
 
@@ -45,7 +43,7 @@ class ChatBar extends Component {
         this.props.serverSend(
           this.state.inputChecker,
           this.state.userChecker,
-          this.state.typeChecker
+          'postMessage'
         );
         this.setState({ inputChecker: '' });
       }

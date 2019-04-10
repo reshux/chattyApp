@@ -25,14 +25,20 @@ const onlineCounter = nbClients => {
 };
 
 // Generate a random hex color
-const getColor = () => {
-  return `#${uuid().slice(0, 6)}`;
+const getColor = client => {
+  const color = {
+    color: `#${uuid().slice(0, 6)}`,
+    type: 'userColor'
+  };
+  client.send(JSON.stringify(color));
 };
 
 wss.on('connection', ws => {
   console.log('Client connected');
   // Call counter everytime a new client connects
   onlineCounter(wss.clients.size);
+  // Assign a color to the client
+  getColor(ws);
   // on message from client
   ws.on('message', msg => {
     const incoming = JSON.parse(msg);
@@ -40,7 +46,8 @@ wss.on('connection', ws => {
       id: uuid(),
       username: incoming.username,
       content: incoming.content,
-      type: ''
+      type: '',
+      color: incoming.color
     };
     // Receive the message, manipulate their type
     switch (incoming.type) {
@@ -68,8 +75,6 @@ wss.on('connection', ws => {
 // A general broadcast function
 wss.broadcast = function(data) {
   wss.clients.forEach(function each(client) {
-    // if (client.readyState === SocketServer.OPEN) {
     client.send(data);
-    // }
   });
 };
