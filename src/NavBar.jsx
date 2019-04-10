@@ -8,7 +8,7 @@ class NavBar extends Component {
           Chatty
         </a>
         <span className="navbar-counter">
-          {this.props.onlineCounter} users online
+          {this.props.onlineCounter} user(s) online
         </span>
       </nav>
     );

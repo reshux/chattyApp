@@ -4,6 +4,9 @@ import Notification from './Notification.jsx';
 
 class MessageList extends Component {
   render() {
+    // receive the messages as a prop. map them to a new array
+    // check their types and return them as an HTML element to render
+    // I prefered to create a seperate Notification component
     const received = this.props.messages.map(msg => {
       if (msg.type === 'incomingMessage') {
         return (

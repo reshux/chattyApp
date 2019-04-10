@@ -1,5 +1,5 @@
 h1 {
-  color: tomato;
+  color: crimson;
 }
 
 body {
@@ -9,7 +9,7 @@ body {
   font-size: 14px;
   margin: 70px 0;
   .navbar {
-    background: tomato;
+    background: crimson;
     border-bottom: 1px solid black;
     height: 60px;
     left: 0;
@@ -33,6 +33,7 @@ body {
       float: right;
       line-height: 60px;
       padding-right: 10px;
+      font-weight: 700;
     }
   }
   .message {
@@ -57,7 +58,7 @@ body {
     padding: 5px 20px;
   }
   .chatbar {
-    background: tomato;
+    background: crimson;
     border-top: 1px solid black;
     bottom: 0;
     display: flex;
@@ -67,12 +68,13 @@ body {
     right: 0;
     .chatbar-message,
     .chatbar-username {
+      border-radius: 5px;
       border: 1px solid black;
       display: block;
       height: 40px;
       line-height: 40px;
       margin: 5px;
-      padding: 0 9px;
+      padding: 0 10px;
     }
     .chatbar-message {
       flex: 8;

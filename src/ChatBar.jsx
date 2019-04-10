@@ -10,6 +10,8 @@ class ChatBar extends Component {
     };
   }
 
+  //// Handler and helper function for a username change
+
   handleChangeUser = event => {
     this.setState({ typeChecker: 'postNotification' });
   };
@@ -27,6 +29,8 @@ class ChatBar extends Component {
       );
     }
   };
+
+  //// Handler and helper function for a new message
 
   handleChangeMessage = event => {
     this.setState({ typeChecker: 'postMessage' });
@@ -54,7 +58,6 @@ class ChatBar extends Component {
         <input
           className="chatbar-username"
           placeholder="Your Name (Optional)"
-          // value={this.state.userChecker}
           onKeyUp={this.onPressEnterUser}
           onChange={this.handleChangeUser}
         />

@@ -24,19 +24,25 @@ const onlineCounter = nbClients => {
   wss.broadcast(JSON.stringify(infoMsg));
 };
 
+// Generate a random hex color
+const getColor = () => {
+  return `#${uuid().slice(0, 6)}`;
+};
+
 wss.on('connection', ws => {
   console.log('Client connected');
   // Call counter everytime a new client connects
   onlineCounter(wss.clients.size);
+  // on message from client
   ws.on('message', msg => {
     const incoming = JSON.parse(msg);
     const builder = {
       id: uuid(),
       username: incoming.username,
       content: incoming.content,
-      type: '',
-      counter: wss.clients.size
+      type: ''
     };
+    // Receive the message, manipulate their type
     switch (incoming.type) {
       case 'postMessage':
         builder.type = 'incomingMessage';
@@ -54,10 +60,12 @@ wss.on('connection', ws => {
   // Set up a callback for when a client closes the socket. This usually means they closed their browser.
   ws.on('close', () => {
     console.log('Client disconnected');
+    // Refresh online counter when a client closes connection
     onlineCounter(wss.clients.size);
   });
 });
 
+// A general broadcast function
 wss.broadcast = function(data) {
   wss.clients.forEach(function each(client) {
     // if (client.readyState === SocketServer.OPEN) {
