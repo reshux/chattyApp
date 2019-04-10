@@ -1,6 +1,6 @@
 # ChattyApp
 
-A minimal and light Chatting application.
+A minimal and light chatting application built to practice ReactJS.
 
 Stack:
 
@@ -10,11 +10,7 @@ Stack:
 
 ### Usage
 
-Install the dependencies for both chatty-app and chatty-server.
-
-```
-npm install
-```
+Install the dependencies for both chatty-app and chatty-server. `npm install`
 
 Start both chatty app and chatty app server using `npm start`
 
