@@ -10,7 +10,13 @@ class MessageList extends Component {
           <Message content={msg.content} username={msg.username} key={msg.id} />
         );
       } else if (msg.type === 'incomingNotification') {
-        return <Notification content={msg.content} />;
+        return (
+          <Notification
+            content={msg.content}
+            key={msg.id}
+            username={msg.username}
+          />
+        );
       }
     });
     return <main className="messages">{received}</main>;
