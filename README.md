@@ -1,6 +1,6 @@
 # ChattyApp
 
-![image](hhttps://i.imgur.com/WGPCSPV.png)
+![image](https://i.imgur.com/WGPCSPV.png)
 
 A minimal and light chatting application built to practice ReactJS.
 
