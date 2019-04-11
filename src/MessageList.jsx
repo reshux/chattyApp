@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Message from './Message.jsx';
 import Notification from './Notification.jsx';
+import Image from './Image.jsx';
 
 class MessageList extends Component {
   render() {
@@ -23,6 +24,15 @@ class MessageList extends Component {
             content={msg.content}
             key={msg.id}
             username={msg.username}
+          />
+        );
+      } else if (msg.type === 'incomingImage') {
+        return (
+          <Image
+            content={msg.content}
+            color={msg.color}
+            username={msg.username}
+            key={msg.id}
           />
         );
       }

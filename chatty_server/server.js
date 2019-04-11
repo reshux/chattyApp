@@ -59,6 +59,9 @@ wss.on('connection', ws => {
         builder.type = 'incomingNotification';
         wss.broadcast(JSON.stringify(builder));
         break;
+      case 'postImage':
+        builder.type = 'incomingImage';
+        wss.broadcast(JSON.stringify(builder));
       default:
         console.log('Error!');
     }

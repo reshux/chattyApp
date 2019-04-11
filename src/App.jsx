@@ -39,6 +39,7 @@ class App extends Component {
     switch (received.type) {
       case 'incomingMessage':
       case 'incomingNotification':
+      case 'incomingImage':
         // updates messages state with a message or notification
         this.setState({ messages: [...oldMessages, received] });
         break;

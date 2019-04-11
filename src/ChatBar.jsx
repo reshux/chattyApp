@@ -9,6 +9,13 @@ class ChatBar extends Component {
     };
   }
 
+  //// Checker function that returns a boolean for image URL
+
+  isImageURL = str => {
+    const tester = /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)/g;
+    return tester.test(str);
+  };
+
   //// Handler and helper function for a username change
 
   handleChange = event => {
@@ -40,12 +47,20 @@ class ChatBar extends Component {
     if (event.key === 'Enter') {
       event.preventDefault();
       if (this.state.inputChecker.length > 0) {
-        this.props.serverSend(
-          this.state.inputChecker,
-          this.state.userChecker,
-          'postMessage'
-        );
-        this.setState({ inputChecker: '' });
+        if (this.isImageURL(this.state.inputChecker)) {
+          this.props.serverSend(
+            this.state.inputChecker,
+            this.state.userChecker,
+            'postImage'
+          );
+        } else {
+          this.props.serverSend(
+            this.state.inputChecker,
+            this.state.userChecker,
+            'postMessage'
+          );
+          this.setState({ inputChecker: '' });
+        }
       }
     }
   };
