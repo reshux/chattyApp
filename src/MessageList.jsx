@@ -37,7 +37,11 @@ class MessageList extends Component {
         );
       }
     });
-    return <main className="messages">{received}</main>;
+    return (
+      <main id="main" className="messages">
+        {received}
+      </main>
+    );
   }
 }
 

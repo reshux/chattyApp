@@ -56,6 +56,13 @@ class App extends Component {
     }
   };
 
+  componentDidUpdate() {
+    const element = document.getElementById('main').lastChild;
+    if (element) {
+      element.scrollIntoView();
+    }
+  }
+
   // a generic function to send data to WebSocket server
   // this function is sent to child component chatBar as a prop
   serverSend = (content, user, type) => {
