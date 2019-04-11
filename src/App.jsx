@@ -12,6 +12,16 @@ class App extends Component {
       messages: []
     };
   }
+
+  componentDidMount() {
+    const url = 'ws://localhost:3001';
+    this.socket = new WebSocket(url);
+    // calling our event handler functions to check for changes
+    this.socket.onopen = this.handleOnOpen;
+    this.socket.onerror = this.handleOnError;
+    this.socket.onmessage = this.handleOnMessage;
+  }
+
   // 3 Generic event handlers
   handleOnOpen = event => {
     console.log('Client connected');
@@ -44,19 +54,9 @@ class App extends Component {
     }
   };
 
-  componentDidMount() {
-    const url = 'ws://localhost:3001';
-    this.socket = new WebSocket(url);
-    // calling our event handler functions to check for changes
-    this.socket.onopen = this.handleOnOpen;
-    this.socket.onerror = this.handleOnError;
-    this.socket.onmessage = this.handleOnMessage;
-  }
-
   // a generic function to send data to WebSocket server
   // this function is sent to child component chatBar as a prop
   serverSend = (content, user, type) => {
-    console.log(this.state.currentUser.color);
     const operator = {
       content,
       username: user,
@@ -67,14 +67,12 @@ class App extends Component {
   };
 
   render() {
+    const { currentUser, messages, onlineCounter } = this.state;
     return (
       <div>
-        <NavBar onlineCounter={this.state.onlineCounter} />
-        <MessageList messages={this.state.messages} />
-        <ChatBar
-          currentUser={this.state.currentUser}
-          serverSend={this.serverSend}
-        />
+        <NavBar onlineCounter={onlineCounter} />
+        <MessageList messages={messages} />
+        <ChatBar currentUser={currentUser} serverSend={this.serverSend} />
       </div>
     );
   }
