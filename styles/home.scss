@@ -3,14 +3,14 @@ h1 {
 }
 
 body {
-  background: white;
+  background: grey;
   color: black;
   font-family: "Open Sans", sans-serif;
   font-size: 14px;
   margin: 70px 0;
   .navbar {
+    color: white;
     background: crimson;
-    border-bottom: 1px solid black;
     height: 60px;
     left: 0;
     padding: 0 10px;
@@ -35,6 +35,14 @@ body {
       padding-right: 10px;
       font-weight: 700;
     }
+  }
+  #container {
+    border: 3px solid white;
+    border-radius: 1em;
+    margin: 10px;
+    padding-top: 5px;
+    height: -webkit-fill-available;
+    background: white;
   }
   .message {
     display: flex;
@@ -61,8 +69,7 @@ body {
     padding: 5px 20px;
   }
   .chatbar {
-    background: crimson;
-    border-top: 1px solid black;
+    background: grey;
     bottom: 0;
     display: flex;
     left: 0;
@@ -72,7 +79,7 @@ body {
     .chatbar-message,
     .chatbar-username {
       border-radius: 5px;
-      border: 1px solid black;
+      border: 1px solid white;
       display: block;
       height: 40px;
       line-height: 40px;
