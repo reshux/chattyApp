@@ -37,3 +37,5 @@ Open in browser at: `http://localhost:3000`
 - sockjs-client
 - style-loader
 - uuid
+- request
+- dotenv
