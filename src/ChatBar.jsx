@@ -54,11 +54,19 @@ class ChatBar extends Component {
             'postImage'
           );
         } else {
-          this.props.serverSend(
-            this.state.inputChecker,
-            this.state.userChecker,
-            'postMessage'
-          );
+          if (this.state.inputChecker.slice(0, 4) === '/gif') {
+            this.props.serverSend(
+              this.state.inputChecker,
+              this.state.userChecker,
+              'postGif'
+            );
+          } else {
+            this.props.serverSend(
+              this.state.inputChecker,
+              this.state.userChecker,
+              'postMessage'
+            );
+          }
           this.setState({ inputChecker: '' });
         }
       }

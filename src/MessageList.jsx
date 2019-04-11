@@ -26,7 +26,7 @@ class MessageList extends Component {
             username={msg.username}
           />
         );
-      } else if (msg.type === 'incomingImage') {
+      } else if (msg.type === 'incomingImage' || msg.type === 'incomingGif') {
         return (
           <Image
             content={msg.content}

@@ -3,6 +3,8 @@
 const express = require('express');
 const SocketServer = require('ws').Server;
 const uuid = require('uuid/v4');
+const request = require('request');
+require('dotenv').config();
 
 // Set the port to 3001
 const PORT = 3001;
@@ -33,6 +35,31 @@ const getColor = client => {
   client.send(JSON.stringify(color));
 };
 
+// Helper function to access Giphy API
+const getCommandParts = content => {
+  const parts = content.split(' ');
+  return {
+    command: parts[0].replace('/', '').toLowerCase(),
+    arguments: parts.slice(1)
+  };
+};
+
+// Get a gif from Giphy
+const getGiphy = (searchContent, cb) => {
+  console.log(searchContent);
+  const reqOptions = {
+    url: `http://api.giphy.com/v1/gifs/search?api_key=${
+      process.env.GIPHY_API_KEY
+    }&q=${searchContent}`,
+    json: true
+  };
+  request(reqOptions, (err, req, images) => {
+    const { data } = images;
+    const randomIndex = Math.floor(Math.random() * data.length);
+    cb(data[randomIndex]);
+  });
+};
+
 wss.on('connection', ws => {
   console.log('Client connected');
   // Call counter everytime a new client connects
@@ -42,6 +69,9 @@ wss.on('connection', ws => {
   // on message from client
   ws.on('message', msg => {
     const incoming = JSON.parse(msg);
+    if (incoming.content.slice(0, 4) === '/gif') {
+      // extract command and arguments
+    }
     const builder = {
       id: uuid(),
       username: incoming.username,
@@ -62,6 +92,16 @@ wss.on('connection', ws => {
       case 'postImage':
         builder.type = 'incomingImage';
         wss.broadcast(JSON.stringify(builder));
+        break;
+      case 'postGif':
+        builder.type = 'incomingGif';
+        const { command, arguments } = getCommandParts(incoming.content);
+        getGiphy(arguments, giphy => {
+          // Sending back the content as an object containing the title and url
+          builder.content = giphy.images.original.url;
+          wss.broadcast(JSON.stringify(builder));
+        });
+        break;
       default:
         console.log('Error!');
     }

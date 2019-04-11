@@ -40,6 +40,7 @@ class App extends Component {
       case 'incomingMessage':
       case 'incomingNotification':
       case 'incomingImage':
+      case 'incomingGif':
         // updates messages state with a message or notification
         this.setState({ messages: [...oldMessages, received] });
         break;
